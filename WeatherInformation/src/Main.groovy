@@ -50,8 +50,13 @@ class Main {
 							td{
 								def reader = new Reader()
 								button(text: "Transmit", id: 'btn1', actionPerformed: {
-									txtArea.text = reader.getVal(cbx1.selectedItem, txtField.text)
-									})
+									if(txtField.text.trim().isInteger() || txtField.text == ''){
+										txtArea.text = reader.getVal(cbx1.selectedItem, txtField.text)
+										println txtField.text
+									}
+									else
+									{ txtArea.text = 'INVALID INPUT' }
+								})
 							}
 						}
 						tr{
@@ -83,7 +88,6 @@ class Reader{
 			
 			case "Get City Forecast By ZIP":
 				Weathering w = new Weathering(zipcode, "Get City Forecast By ZIP")
-		
 				if(w.isitSuccess().toString().toLowerCase() == 'false')
 				{
 					text = 'INVALID ZIP CODE'
@@ -172,7 +176,7 @@ class Weathering
 					}
 				}
 			}
-			
+//			println response.GetCityForecastByZIPResponse.GetCityForecastByZIPResult.ForecastResult.Forecast.Temperatures.children().toString()
 			this.GetCity = response.GetCityForecastByZIPResponse.GetCityForecastByZIPResult
 			this.Success = GetCity.Success
 			this.ResponseText = GetCity.ResponseText
